@@ -6,20 +6,7 @@ use Illuminate\Support\Arr;
 
 $factory->define(App\Definition::class, function (Faker $faker) {
     return [
-        'name' => function () {
-            static $shiftNames = ['Morning', 'Night', 'Afternoon', 'Early Bird', 'Graveyard'];
-            static $unused = [];
-
-            if (empty($unused)) {
-                $unused = $shiftNames;
-            }
-
-            $value = $unused[$randKey = array_rand($unused)];
-
-            unset($unused[$randKey]);
-
-            return $value;
-        },
+        'name' => Arr::random(['Morning', 'Night', 'Afternoon', 'Early Bird', 'Graveyard']),
         'start_time' => function () {
             return now()->setTime(
                 Arr::random(range(0, 24)),
