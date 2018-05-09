@@ -8,7 +8,7 @@ $factory->define(App\Shift::class, function (Faker $faker) {
             return factory(App\Definition::class)->create()->id;
         },
         'date' => function () use ($faker) {
-            return now()->addDays($faker->numberBetween(0, 10));
+            return today()->addDays($faker->numberBetween(0, 10));
         },
     ];
 });

@@ -1,5 +1,6 @@
 <?php
 
+use Carbon\Carbon;
 use Illuminate\Support\Str;
 
 /**
@@ -32,11 +33,15 @@ function model_route($model, $action)
 }
 
 /**
- * @param $string
+ * @param $date
  *
  * @return \Carbon\Carbon
  */
-function carb($string = null)
+function carb($date = null)
 {
-    return \Carbon\Carbon::parse($string);
+    if ($date instanceof Carbon) {
+        return $date->copy();
+    }
+
+    return \Carbon\Carbon::parse($date);
 }

@@ -2,29 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Day;
+use App\Definition;
 use App\Shift;
 
 class DaysController extends Controller
 {
     public function index()
     {
-        $date = carb()->addDays(request('page', 0));
+        $linkData = Day::links(request('start'), 20);
 
-        $links = [
-            ['url' => route('days.day', $date->toDateString()), 'date' => $date->toDateString()],
-            ['url' => route('days.day', $date->addDay()->toDateString()), 'date' => $date->toDateString()],
-            ['url' => route('days.day', $date->addDay()->toDateString()), 'date' => $date->toDateString()],
-            ['url' => route('days.day', $date->addDay()->toDateString()), 'date' => $date->toDateString()],
-            ['url' => route('days.day', $date->addDay()->toDateString()), 'date' => $date->toDateString()],
-        ];
-
-        return view('days.index', compact('links'));
+        return view('days.index', $linkData);
     }
 
     public function show($date)
     {
-        return view('days.show', [
-            'shifts' => Shift::allForDate($date)
-        ]);
+        $shifts = Shift::forDate($date)->get();
+
+        $definitionsMissing = Definition::allExcept($shifts->map->definition_id)->get();
+
+        return view('days.show', compact('shifts', 'definitionsMissing'));
     }
 }

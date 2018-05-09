@@ -25,6 +25,16 @@
                         </div>
                     </div>
                 @endforeach
+
+                @if ($definitionsMissing)
+                    <ul class="pt-4">
+                        @foreach ($definitionsMissing as $definition)
+                            <li>
+                                Add {{ $definition->name }} shift
+                            </li>
+                        @endforeach
+                    </ul>
+                @endif
             </div>
         </div>
     </div>

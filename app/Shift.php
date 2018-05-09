@@ -16,12 +16,11 @@ class Shift extends Model
     protected static function boot()
     {
         static::creating(function ($shift) {
-            $params = [
-                'date' => $shift->date,
-                'definition_id' => $shift->definition_id,
-            ];
+            $query = Shift::query()
+                ->forDate($shift->date)
+                ->where('definition_id', $shift->definition_id);
 
-            if (Shift::where($params)->exists()) {
+            if ($query->exists()) {
                 throw new MultipleShiftAssignmentException;
             }
         });
@@ -44,8 +43,13 @@ class Shift extends Model
         )->setTime(0, 0, 0);
     }
 
-    public static function allForDate($date)
-    {
-        return static::where('date', $date)->get();
+    public function scopeForDate($query, $date) {
+        $date = carb($date);
+
+        // This is for sqlite compatibility
+        return $query->whereBetween('date', [
+            (string) $date->subSecond(1),
+            (string) $date->addSecond(2)
+        ]);
     }
 }

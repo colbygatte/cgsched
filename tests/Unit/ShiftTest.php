@@ -15,8 +15,6 @@ class ShiftTest extends TestCase
     /** @test */
     public function same_shift_cannot_be_assigned_to_employee_on_same_day()
     {
-        eval(\Psy\sh());
-
         $this->expectException(MultipleShiftAssignmentException::class);
 
         $values = create(Shift::class)->getAttributeValues(['definition_id', 'date']);

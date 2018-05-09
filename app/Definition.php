@@ -33,4 +33,12 @@ class Definition extends Model
             'date' => ($date instanceof Carbon ? $date->toDateString() : $date)
         ]);
     }
+
+    public static function scopeAllExcept($query, $ids) {
+        foreach ($ids as $id) {
+            $query->where('id', '<>', $id);
+        }
+
+        return $query;
+    }
 }
