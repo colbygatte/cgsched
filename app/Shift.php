@@ -31,6 +31,11 @@ class Shift extends Model
         return $this->belongsTo(Definition::class);
     }
 
+    public function position()
+    {
+        return $this->belongsTo(Position::class);
+    }
+
     public function users()
     {
         return $this->belongsToMany(User::class)->withTimestamps();
@@ -38,9 +43,7 @@ class Shift extends Model
 
     public function getDateAttribute()
     {
-        return Carbon::parse(
-            $this->attributes['date']
-        )->setTime(0, 0, 0);
+        return carb($this->attributes['date'])->setTime(0, 0, 0);
     }
 
     public function scopeForDate($query, $date) {

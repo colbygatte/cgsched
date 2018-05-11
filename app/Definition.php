@@ -15,22 +15,18 @@ class Definition extends Model
 
     public function getStartTimeAttribute()
     {
-        return Carbon::parse(
-            $this->attributes['start_time']
-        );
+        return carb($this->attributes['start_time']);
     }
 
     public function getEndTimeAttribute()
     {
-        return Carbon::parse(
-            $this->attributes['end_time']
-        );
+        return carb($this->attributes['end_time']);
     }
 
     public function shiftOnDate($date)
     {
         return $this->shifts()->firstOrNew([
-            'date' => ($date instanceof Carbon ? $date->toDateString() : $date)
+            'date' => carb($date)->toDateString()
         ]);
     }
 

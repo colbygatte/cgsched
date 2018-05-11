@@ -30,7 +30,12 @@
                     <ul class="pt-4">
                         @foreach ($definitionsMissing as $definition)
                             <li>
-                                Add {{ $definition->name }} shift
+                                <form action="{{ route('shifts.makeShift', $definition) }}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="date" value="{{ $date }}">
+
+                                    <button>Add {{ $definition->name }} shift</button>
+                                </form>
                             </li>
                         @endforeach
                     </ul>

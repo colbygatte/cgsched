@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Definition;
 use App\Shift;
 use App\User;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Auth;
 
 class ShiftsController extends Controller
@@ -17,21 +17,9 @@ class ShiftsController extends Controller
      */
     public function index()
     {
-        $shifts = Auth::user()->shifts()->paginate(25);
+        $shifts = Auth::user()->shifts()->orderBy('date', 'asc')->paginate(25);
 
         return view('shifts.index', compact('shifts'));
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Shift $shift
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Shift $shift)
-    {
-        return view('shifts.show', compact('shift'));
     }
 
     /**
@@ -78,6 +66,18 @@ class ShiftsController extends Controller
         $shift->users()->detach($user);
 
         return back()->with(['status' => 'Successfully removed']);
+    }
+
+    public function makeShift(Definition $definition)
+    {
+        $date = carb(request('date'));
+
+        Shift::create([
+            'date' => $date,
+            'definition_id' => $definition->id
+        ]);
+
+        return back()->with(['status' => 'Success!']);
     }
 }
 

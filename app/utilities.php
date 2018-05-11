@@ -33,15 +33,13 @@ function model_route($model, $action)
 }
 
 /**
+ * Always returns a new Carbon instance.
+ *
  * @param $date
  *
  * @return \Carbon\Carbon
  */
 function carb($date = null)
 {
-    if ($date instanceof Carbon) {
-        return $date->copy();
-    }
-
-    return \Carbon\Carbon::parse($date);
+    return $date instanceof Carbon ? $date->copy() : \Carbon\Carbon::parse($date);
 }

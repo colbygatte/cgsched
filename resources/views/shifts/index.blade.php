@@ -4,14 +4,20 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
+
+                <h2>Your Shifts</h2>
+
                 @foreach ($shifts as $shift)
-                    <div class="card">
-                        <div class="card-header">
-                            <strong>{{ $shift->definition->name }}</strong>
+                    <div class="card mb-3">
+                        <div class="card-header d-flex justify-content-between">
+                            <strong>{{ $shift->date->format('M d, Y') }}</strong>
+
+                            <span>{{ $shift->definition->name }}</span>
 
                             @admin
-                            <span class="badge badge-secondary badge-secondary ml-1">Edit</span>
-                            <span class="badge badge-secondary badge-danger ml-1">Delete</span>
+                                <div>
+                                    <span class="badge badge-secondary badge-danger ml-1">Delete</span>
+                                </div>
                             @endadmin
                         </div>
 

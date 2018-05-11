@@ -21,6 +21,6 @@ class DaysController extends Controller
 
         $definitionsMissing = Definition::allExcept($shifts->map->definition_id)->get();
 
-        return view('days.show', compact('shifts', 'definitionsMissing'));
+        return view('days.show', compact('shifts', 'definitionsMissing', 'date'));
     }
 }

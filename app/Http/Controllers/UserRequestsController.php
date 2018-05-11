@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Position;
+use App\UserRequest;
 use Illuminate\Http\Request;
 
-class PositionController extends Controller
+class UserRequestsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,11 @@ class PositionController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Position  $position
+     * @param  \App\UserRequest $request
+     *
      * @return \Illuminate\Http\Response
      */
-    public function show(Position $position)
+    public function show(Request $request)
     {
         //
     }
@@ -52,10 +53,11 @@ class PositionController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Position  $position
+     * @param  \App\UserRequest $request
+     *
      * @return \Illuminate\Http\Response
      */
-    public function edit(Position $position)
+    public function edit(Request $request)
     {
         //
     }
@@ -63,11 +65,12 @@ class PositionController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Position  $position
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\UserRequest         $request
+     *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Position $position)
+    public function update(Request $request, Request $request)
     {
         //
     }
@@ -75,10 +78,11 @@ class PositionController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Position  $position
+     * @param  \App\UserRequest  $request
+     *
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Position $position)
+    public function destroy(Request $request)
     {
         //
     }
