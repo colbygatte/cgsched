@@ -36,4 +36,9 @@ class User extends Authenticatable
     {
         return in_array($this->email, config('cgsched.administrators'));
     }
+
+    public function requests()
+    {
+        return $this->hasMany(UserRequest::class);
+    }
 }

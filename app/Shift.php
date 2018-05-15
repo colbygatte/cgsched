@@ -3,10 +3,13 @@
 namespace App;
 
 use App\Exceptions\MultipleShiftAssignmentException;
+use App\Scopes\ForDate;
 use Carbon\Carbon;
 
 class Shift extends Model
 {
+    use ForDate;
+
     protected $guarded = [];
 
     protected $with = ['definition'];
@@ -44,15 +47,5 @@ class Shift extends Model
     public function getDateAttribute()
     {
         return carb($this->attributes['date'])->setTime(0, 0, 0);
-    }
-
-    public function scopeForDate($query, $date) {
-        $date = carb($date);
-
-        // This is for sqlite compatibility
-        return $query->whereBetween('date', [
-            (string) $date->subSecond(1),
-            (string) $date->addSecond(2)
-        ]);
     }
 }

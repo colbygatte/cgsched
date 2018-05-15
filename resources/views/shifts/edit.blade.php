@@ -9,7 +9,7 @@
                         <strong>{{ $shift->definition->name }} shift on {{ $shift->date->toDateString() }}</strong>
 
                         @admin
-                        <span class="badge badge-secondary badge-danger ml-1">Delete</span>
+                            <span class="badge badge-secondary badge-danger ml-1">Delete</span>
                         @endadmin
                     </div>
 
@@ -17,9 +17,13 @@
                         Employees on shift:
 
                         <ul>
-                            @foreach ($shift->users as $user)
+                            @foreach ($usersOnShift as $user)
                                 <li>
                                     {{ $user->name }}
+
+                                    @if ($usersRequestingOff->contains($user->id))
+                                        Wants Off
+                                    @endif
 
                                     <form action="{{ route('shifts.destroy', [$shift, $user]) }}" method="POST">
                                         @csrf
@@ -35,19 +39,21 @@
 
                         Employees not on shift:
                         <ul>
-                            @foreach (App\User::all() as $user)
-                                @if (! $shift->users->contains($user))
-                                    <li>
-                                        {{ $user->name }}
+                            @foreach ($usersNotOnShift as $user)
+                                <li>
+                                    {{ $user->name }}
 
-                                        <form action="{{ route('shifts.store', [$shift, $user]) }}" method="POST">
-                                            @csrf
-                                            <input type="hidden" name="user_id" value="{{ $user->id }}">
+                                    @if ($usersRequestingOff->contains($user->id))
+                                        Wants Off
+                                    @endif
 
-                                            <button type="submit">Add to Shift</button>
-                                        </form>
-                                    </li>
-                                @endif
+                                    <form action="{{ route('shifts.store', [$shift, $user]) }}" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="user_id" value="{{ $user->id }}">
+
+                                        <button type="submit">Add to Shift</button>
+                                    </form>
+                                </li>
                             @endforeach
                         </ul>
 

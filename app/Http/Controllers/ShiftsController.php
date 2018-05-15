@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Definition;
 use App\Shift;
 use App\User;
+use App\UserRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -31,7 +32,12 @@ class ShiftsController extends Controller
      */
     public function edit(Shift $shift)
     {
-        return view('shifts.edit', compact('shift'));
+        return view('shifts.edit', [
+            'shift' => $shift,
+            'usersOnShift' => $shift->users,
+            'usersNotOnShift' => User::whereNotIn('id', $shift->users->map->id)->get(),
+            'usersRequestingOff' => UserRequest::forDate($shift->date)->forDefinition($shift->definition_id)->get()->map->user_id
+        ]);
     }
 
     public function store(Shift $shift, User $user)
