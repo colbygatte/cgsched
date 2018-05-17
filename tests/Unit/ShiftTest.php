@@ -17,9 +17,9 @@ class ShiftTest extends TestCase
     {
         $this->expectException(MultipleShiftAssignmentException::class);
 
-        $values = create(Shift::class)->getAttributeValues(['definition_id', 'date']);
+        $params = create(Shift::class)->getAttributeValues(['definition_id', 'date']);
 
-        create(Shift::class, $values);
+        create(Shift::class, $params);
     }
 
     /** @test */

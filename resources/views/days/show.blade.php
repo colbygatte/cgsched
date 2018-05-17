@@ -26,21 +26,23 @@
                     </div>
                 @endforeach
 
-                @if ($definitionsMissing)
-                    <ul class="pt-4">
-                        @foreach ($definitionsMissing as $definition)
-                            <li>
-                                <form action="{{ route('shifts.makeShift', $definition) }}" method="POST">
-                                    @csrf
+                @admin
+                    @if ($definitionsMissing)
+                        <ul class="pt-4">
+                            @foreach ($definitionsMissing as $definition)
+                                <li>
+                                    <form action="{{ route('shifts.makeShift', $definition) }}" method="POST">
+                                        @csrf
 
-                                    <input type="hidden" name="date" value="{{ $date }}">
+                                        <input type="hidden" name="date" value="{{ $date }}">
 
-                                    <button>Add {{ $definition->name }} shift</button>
-                                </form>
-                            </li>
-                        @endforeach
-                    </ul>
-                @endif
+                                        <button>Add {{ $definition->name }} shift</button>
+                                    </form>
+                                </li>
+                            @endforeach
+                        </ul>
+                    @endif
+                @endadmin
             </div>
         </div>
     </div>

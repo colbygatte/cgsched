@@ -19,9 +19,7 @@ class Shift extends Model
     protected static function boot()
     {
         static::creating(function ($shift) {
-            $query = Shift::query()
-                ->forDate($shift->date)
-                ->where('definition_id', $shift->definition_id);
+            $query = Shift::forDate($shift->date)->where('definition_id', $shift->definition_id);
 
             if ($query->exists()) {
                 throw new MultipleShiftAssignmentException;

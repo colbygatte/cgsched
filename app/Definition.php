@@ -31,10 +31,6 @@ class Definition extends Model
     }
 
     public static function scopeAllExcept($query, $ids) {
-        foreach ($ids as $id) {
-            $query->where('id', '<>', $id);
-        }
-
-        return $query;
+        return $query->whereNotIn('id', $ids);
     }
 }

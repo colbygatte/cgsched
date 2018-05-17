@@ -41,5 +41,7 @@ function model_route($model, $action)
  */
 function carb($date = null)
 {
-    return $date instanceof Carbon ? $date->copy() : \Carbon\Carbon::parse($date);
+    return $date instanceof Carbon
+        ? $date->copy()
+        : \Carbon\Carbon::parse($date);
 }
