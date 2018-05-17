@@ -2,22 +2,12 @@
 
 namespace App\Http\Middleware;
 
+use App\Exceptions\WrongPermissionsException;
 use Closure;
-use Illuminate\Auth\WrongPermissionsException;
 use Illuminate\Contracts\Auth\Factory as Auth;
 
 class Administrator
 {
-    /**
-     * @var \Illuminate\Contracts\Auth\Factory
-     */
-    protected $auth;
-
-    public function __construct(Auth $auth)
-    {
-        $this->auth = $auth;
-    }
-
     /**
      * Handle an incoming request.
      *
