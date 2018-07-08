@@ -29,8 +29,4 @@ class Definition extends Model
             'date' => carb($date)->toDateString()
         ]);
     }
-
-    public static function scopeAllExcept($query, $ids) {
-        return $query->whereNotIn('id', $ids);
-    }
 }

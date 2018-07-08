@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-class UserRequestsController extends Controller
+class UserRequestController extends Controller
 {
     //
 }

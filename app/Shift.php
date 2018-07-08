@@ -3,13 +3,10 @@
 namespace App;
 
 use App\Exceptions\MultipleShiftAssignmentException;
-use App\Scopes\ForDate;
 use Carbon\Carbon;
 
 class Shift extends Model
 {
-    use ForDate;
-
     protected $guarded = [];
 
     protected $with = ['definition'];
@@ -19,7 +16,10 @@ class Shift extends Model
     protected static function boot()
     {
         static::creating(function ($shift) {
-            $query = Shift::forDate($shift->date)->where('definition_id', $shift->definition_id);
+            $query = Shift::where([
+                'date' => $shift->date,
+                'definition_id' => $shift->definition_id
+            ]);
 
             if ($query->exists()) {
                 throw new MultipleShiftAssignmentException;
@@ -40,6 +40,11 @@ class Shift extends Model
     public function users()
     {
         return $this->belongsToMany(User::class)->withTimestamps();
+    }
+
+    public function getUserIds()
+    {
+        return $this->users->pluck('id');
     }
 
     public function getDateAttribute()

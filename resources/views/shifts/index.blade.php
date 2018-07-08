@@ -10,7 +10,11 @@
                 @foreach ($shifts as $shift)
                     <div class="card mb-3">
                         <div class="card-header d-flex justify-content-between">
-                            <strong>{{ $shift->date->format('M d, Y') }}</strong>
+                            <strong>
+                                <a href="{{ route('days.show', $shift->date->toDateString()) }}">
+                                    {{ $shift->date->format('M d, Y') }}
+                                </a>
+                            </strong>
 
                             <span>{{ $shift->definition->name }}</span>
 

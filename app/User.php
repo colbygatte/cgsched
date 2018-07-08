@@ -34,11 +34,16 @@ class User extends Authenticatable
 
     public function isAdmin()
     {
-        return in_array($this->email, config('cgsched.administrators'));
+        return in_array($this->email, config('cgsched.admins'));
     }
 
     public function requests()
     {
         return $this->hasMany(UserRequest::class);
+    }
+
+    public function stores()
+    {
+        return $this->belongsToMany(Store::class)->withTimestamps();
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Auth\RequestGuard;
 use Illuminate\Auth\SessionGuard;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
@@ -20,6 +21,10 @@ class AppServiceProvider extends ServiceProvider
         });
 
         SessionGuard::macro('isAdmin', function () {
+            return optional(auth()->user())->isAdmin() ?? false;
+        });
+
+        RequestGuard::macro('isAdmin', function () {
             return optional(auth()->user())->isAdmin() ?? false;
         });
     }

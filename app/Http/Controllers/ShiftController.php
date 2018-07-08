@@ -9,7 +9,7 @@ use App\UserRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class ShiftsController extends Controller
+class ShiftController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,7 +18,7 @@ class ShiftsController extends Controller
      */
     public function index()
     {
-        $shifts = Auth::user()->shifts()->orderBy('date', 'asc')->paginate(25);
+        $shifts = Auth::user()->shifts()->orderBy('date', 'asc')->paginate(config('cgsched.pagination.per_page'));
 
         return view('shifts.index', compact('shifts'));
     }

@@ -13,6 +13,14 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::middleware('auth:api')->group(function () {
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    });
+
+    // Admin API routes
+    Route::middleware('admin')->namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
+        Route::apiResource('announcements', 'AnnouncementController');
+        Route::apiResource('users', 'UserController')->only(['index', 'show']);
+    });
 });

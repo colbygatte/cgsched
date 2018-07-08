@@ -7,7 +7,7 @@ use App\Shift;
 use App\User;
 use App\UserRequest;
 
-class ShiftsController
+class ShiftController
 {
     /**
      * Show the form for editing the specified resource.
@@ -21,8 +21,11 @@ class ShiftsController
         return view('shifts.edit', [
             'shift' => $shift,
             'usersOnShift' => $shift->users,
-            'usersNotOnShift' => User::whereNotIn('id', $shift->users->pluck('id'))->get(),
-            'usersRequestingOff' => UserRequest::forDate($shift->date)->forDefinition($shift->definition_id)->get()->pluck('user_id')
+            'usersNotOnShift' => User::whereNotIn('id', $shift->getUserIds())->get(),
+            'usersRequestingOff' => UserRequest::where('date', $shift->date)
+                ->where('definition_id', $shift->definition_id)
+                ->get()
+                ->pluck('user_id')
         ]);
     }
 
@@ -62,13 +65,16 @@ class ShiftsController
 
     public function makeShift(Definition $definition)
     {
-        $date = carb(request('date'));
+        $date = carb(request('date')); // Validate date
 
-        Shift::create([
+        $shift = Shift::create([
             'date' => $date,
             'definition_id' => $definition->id
         ]);
 
-        return back()->with(['status' => 'Success!']);
+        return back()->with([
+            'status' => 'Success!',
+            'data' => compact('shift')
+        ]);
     }
 }

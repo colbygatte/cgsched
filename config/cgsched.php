@@ -1,7 +1,10 @@
 <?php
 
 return [
-    'administrators' => [
+    'admins' => [
         'colbygatte@gmail.com',
     ],
+    'pagination' => [
+        'per_page' => 20
+    ]
 ];
